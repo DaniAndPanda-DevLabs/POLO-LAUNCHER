@@ -27,7 +27,29 @@ color:white;
 display:flex;
 align-items:center;
 padding-left:10px;
+padding-right:10px;
 font-family:sans-serif;
+gap:5px;
+}
+
+.taskbar-app{
+width:45px;
+height:45px;
+background:rgba(255,255,255,0.2);
+border:none;
+border-radius:5px;
+color:white;
+font-size:20px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:all 0.2s;
+}
+
+.taskbar-app:hover{
+background:rgba(255,255,255,0.4);
+transform:scale(1.1);
 }
 
 /* 파일 영역 */
@@ -42,7 +64,16 @@ margin-bottom:60px;
 <body>
     <h1 class="heading">hello world!</h1>
     <div id="desktop-files">파일들 위치</div>
-    <div id="taskbar">태스크바</div>
+    <div id="taskbar">
+        <button class="taskbar-app" title="파일 관리자">📁</button>
+        <button class="taskbar-app" title="브라우저">🌐</button>
+        <button class="taskbar-app" title="설정">⚙️</button>
+        <button class="taskbar-app" title="계산기">🔢</button>
+        <button class="taskbar-app" title="터미널">💻</button>
+        <button class="taskbar-app" title="메모">📝</button>
+        <button class="taskbar-app" title="음악 플레이어">🎵</button>
+        <button class="taskbar-app" title="이미지 뷰어">🖼️</button>
+    </div>
     <script>
         const heading = document.querySelectorAll(".heading");
         let color = 0;
@@ -53,6 +84,27 @@ margin-bottom:60px;
                 element.style.color = `hsl(${hue}, 100%, 35%)`;
             });
         }, 16);
+
+        // 태스크바 앱 버튼 클릭 이벤트
+        const apps = {
+            '📁': { name: '파일 관리자', action: () => alert('파일 관리자 열기') },
+            '🌐': { name: '브라우저', action: () => alert('웹 브라우저 열기') },
+            '⚙️': { name: '설정', action: () => alert('설정 열기') },
+            '🔢': { name: '계산기', action: () => alert('계산기 열기') },
+            '💻': { name: '터미널', action: () => alert('터미널 열기') },
+            '📝': { name: '메모', action: () => alert('메모장 열기') },
+            '🎵': { name: '음악 플레이어', action: () => alert('음악 플레이어 열기') },
+            '🖼️': { name: '이미지 뷰어', action: () => alert('이미지 뷰어 열기') }
+        };
+
+        document.querySelectorAll('.taskbar-app').forEach(button => {
+            button.addEventListener('click', () => {
+                const emoji = button.textContent;
+                if (apps[emoji]) {
+                    apps[emoji].action();
+                }
+            });
+        });
     </script>
 </body>
 
