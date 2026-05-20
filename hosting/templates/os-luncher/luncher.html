@@ -96,6 +96,20 @@ margin-bottom:60px;
             '🎵': { name: '음악 플레이어', action: () => alert('음악 플레이어 열기') },
             '🖼️': { name: '이미지 뷰어', action: () => alert('이미지 뷰어 열기') }
         };
+const app_links = {
+  '디데이': './apps/d-day.html',
+  '타이머': './apps/timer.html',
+  '주사위 던지기': './apps/dice.html',
+  '랜덤 선택': './apps/random.html',
+  '돌림판': './apps/circlepan.html',
+  '점수판': './apps/scoreboard.html',
+  '메모지': './apps/memo.html',
+  '소음 측정기': './apps/소음측정기.html',
+  '브라우저': './apps/browser.html',
+  'QR 코드 생성기': './apps/qrcodemaker.html',
+  '실시간 시계': './apps/livetime.html',
+  '체크리스트': './apps/checklist.html'
+};
 
         document.querySelectorAll('.taskbar-app').forEach(button => {
             button.addEventListener('click', () => {
