@@ -3,6 +3,7 @@ Polo luncher is great luncher. Made with danilab
 (참고 : C 폴더는 windows의 C:/ 저장소같은거임.)
 POLO Launcher의 기능을 알아보세요
 <details>
+    
     <summary>Shell</summary>
     
     ---
@@ -17,6 +18,7 @@ POLO Launcher의 기능을 알아보세요
     ```
     echo <pre><문자></pre>: <pre><문자></pre>에 입력된 값을 그대로 출력합니다. 메아리라고 생각하시면 편합니다.
     ```
+    
 </details>
 <details>
     <summary>기본 앱</summary>
