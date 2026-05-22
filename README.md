@@ -42,19 +42,5 @@ echo <문자>
 </details>
 <details>
 <summary>Log</summary>
-
----
-
-```bash
-cls
-```
-콘솔을 비웁니다.
-
----
-
-```bash
-echo <문자>
-```
-`<문자>`에 입력된 값을 그대로 출력합니다. 메아리라고 생각하시면 편합니다.
-
+log기능 있음.
 </details>
