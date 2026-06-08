@@ -30,9 +30,33 @@ socketio = socketIO(app)
 db = SQLAlchemy(app)
 CSRFProtect(app)
 
-@app.route()
+@app.route('/')
 def index():
     return render_template("index.html")
+
+@app.route('/get/data/<filename>')
+def get_data(filename):
+    """요청한 data 파일 반환"""
+    try:
+        # 파일 경로 설정 (../data/ 디렉토리)
+        data_dir = Path(__file__).resolve().parent.parent / "data"
+        file_path = data_dir / filename
+        
+        # 보안: 상대경로 벗어나기 방지
+        if not str(file_path.resolve()).startswith(str(data_dir.resolve())):
+            return {"error": "Invalid file path"}, 400
+        
+        # 파일이 존재하는지 확인
+        if not file_path.exists():
+            return {"error": f"File not found: {filename}"}, 404
+        
+        # 파일 내용 읽기
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        return content, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+    except Exception as e:
+        return {"error": str(e)}, 500
     
 if __name__ == "__main__":
-    server = WSGIServer(("0.0.0.0", 80), app, handler_class=WebSocketHandler)
+    server = WSGIServer(("0.0.0.0", 6767), app, handler_class=WebSocketHandler)
