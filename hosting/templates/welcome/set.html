@@ -147,7 +147,9 @@ button{
         <h1>다크모드/화이트 모드</h1>
         <p>
             다크모드 또는 화이트 모드를 선택해주세요.
-        </p>
+            <input type="radio" name="theme" value="다크모드"> 다크모드
+<input type="radio" name="theme" value="화이트모드"> 화이트모드
+</p>
     </section>
 
     <section class="slide">
@@ -155,6 +157,9 @@ button{
         <h1>Ai 설정</h1>
         <p>
             ai 기능을 사용하시겠습니까?
+<input type="radio" name="ai" value="사용"> Ai 기능 사용
+<input type="radio" name="ai" value="사용안함"> Ai 기능 사용 안함
+
         </p>
     </section>
 
@@ -224,11 +229,31 @@ function updateSlider() {
 }
 
 nextBtn.addEventListener("click",()=>{
+    // 1번째 슬라이드(테마 선택) 체크 확인
+    if (current === 0) {
+        const themeChecked = document.querySelector('input[name="theme"]:checked');
+        if (!themeChecked) {
+            alert("다크모드 또는 화이트모드를 선택해주세요!");
+            return; // 선택 안 했으면 여기서 함수를 종료해서 안 넘어가게 막아요.
+        }
+    }
+
+    // 2번째 슬라이드(AI 설정) 체크 확인
+    if (current === 1) {
+        const aiChecked = document.querySelector('input[name="ai"]:checked');
+        if (!aiChecked) {
+            alert("AI 기능 사용 여부를 선택해주세요!");
+            return; // 선택 안 했으면 안 넘어가게 막아요.
+        }
+    }
+
+    // 모든 조건이 통과되면 다음 슬라이드로 이동합니다.
     if(current < 3){
         current++;
         updateSlider();
     }
 });
+
 
 dots.forEach((dot,index)=>{
     dot.addEventListener("click",()=>{
@@ -240,6 +265,8 @@ dots.forEach((dot,index)=>{
 startBtn.addEventListener("click",()=>{
     window.location.href = "../os-luncher/luncher.html";
 });
+
+
 </script>
 
 </body>
