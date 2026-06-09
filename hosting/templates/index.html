@@ -49,13 +49,22 @@
         </div>
     </div>
     <script>
-            //대충 5초 걸리고 바 끝남. 그러니까 5초 뒤에 index.html로 리다이렉트
-        setTimeout(function() {
-            window.location.href = './os-luncher/luncher.html';
-        }, 5000);
-        connect() {
-            to = 'localhost:6767/index.html'
-        }
+        // set.txt에서 설정 상태 확인하여 리다이렉트
+        fetch('http://localhost:6767/get/data/set.txt')
+            .then(response => response.text())
+            .then(data => {
+                const firstLine = data.split('\n')[0].trim();
+                if (firstLine === 'seted=false') {
+                    window.location.href = './welcome/index.html';
+                } else if (firstLine === 'seted=true') {
+                    window.location.href = './os-luncher/luncher.html';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                // 오류 시 기본으로 luncher로 이동
+                window.location.href = './os-luncher/luncher.html';
+            });
     </script>
 </body>
 </html>
