@@ -54,5 +54,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: '🐛 새로운 버그 이슈가 접수되었습니다! @danidevlab @Pandadevlab 확인 부탁드립니다.'
+              body: '버그 이슈가 접수되었습니다. 빠른 시일 내에 답변 그리겠습니다.'
             })
