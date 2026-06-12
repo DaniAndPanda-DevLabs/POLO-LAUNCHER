@@ -66,6 +66,6 @@ log기능 있음.</br>
 <details>
 <summary>포트</summary>
 log기능 있음.</br>
-호스팅 : 6767
+호스팅 : 6767(six-seven)
 로그 전송 : 6766
 </details>
