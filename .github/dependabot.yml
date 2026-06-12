@@ -9,7 +9,7 @@ updates:
     schedule:
       # 매일 자동으로 검사 (한국 시간 기준 새벽 시간대 설정 추천)
       interval: "daily"
-      time: "03:00"
+      time: "07:30"
       timezone: "Asia/Seoul"
       
     # 한 번에 열 수 있는 최대 Pull Request 개수 제한 (기본값 5)
