@@ -164,7 +164,9 @@ button{
     </section>
     <section class="slide">
         <h1>이 Launcher의 특장점</h1>
-            <h2><div class=icon>📶</div>무시무시한 속도</h2>
+        <h2><div class=icon>📶</div>무시무시한 속도</h2>
+        <br><br>
+        <input type="radio" name="ok" value="수락">
     </section>
     <section class="slide">
         <div class="icon">⚡</div>
@@ -246,6 +248,14 @@ nextBtn.addEventListener("click",()=>{
         const aiChecked = document.querySelector('input[name="ai"]:checked');
         if (!aiChecked) {
             alert("AI 기능 사용 여부를 선택해주세요!");
+            return; // 선택 안 했으면 안 넘어가게 막아요.
+        }
+    }
+    // 3번째 슬라이드 체크 확인
+    if (current === 1) {
+        const aiChecked = document.querySelector('input[name="ok"]:checked');
+        if (!aiChecked) {
+            alert("특장점을 수락하세요!");
             return; // 선택 안 했으면 안 넘어가게 막아요.
         }
     }
