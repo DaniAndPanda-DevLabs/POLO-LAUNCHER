@@ -33,21 +33,19 @@ echo <문자>
 
 <details>
     <summary>기본 앱</summary>
-        1. 디데이</br>
-2. 타이머</br>
-3. 주사위 던지기</br>
-4. 랜덤 선택</br>
-5. 돌림판</br>
-6. 점수판</br>
-7. 메모지</br>
-8. 소음 측정기</br>
-9. 브라우저</br>
-10. QR 코드 생성기</br>
-11. 실시간 시계</br>
-12. 체크리스트</br>
-13. ChatAI</br>
-14. 점수판 프로(HTML에서 3000원 결제 후 사용)</br>
-15. 쿼스트로 AI(고급 버전, HTML에서 5000원 결제 후 사용)</br>
+        1. 디데이(d-day.html)</br>
+2. 타이머(timer.html)</br>
+3. 주사위 던지기(dice.html)</br>
+4. 랜덤 선택(random.html)</br>
+5. 돌림판(circlepan.html)</br>
+6. 점수판(scoreboard.html)</br>
+7. 메모(memo.html)</br>
+8. 소음 측정기(noise-meter.html)</br>
+9. 브라우저(browser.html)</br>
+10. QR 코드 생성기(qrcodemaker.html)</br>
+11. 실시간 시계(livetime.html)</br>
+12. 체크리스트(checklist.html)</br>
+13. ChatAI(chatai.html)</br>
 
 </details>
 <details>
