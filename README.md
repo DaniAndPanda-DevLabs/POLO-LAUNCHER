@@ -41,11 +41,10 @@ echo <문자>
 6. 점수판(scoreboard.html)</br>
 7. 메모(memo.html)</br>
 8. 소음 측정기(noise-meter.html)</br>
-9. 브라우저(browser.html)</br>
-10. QR 코드 생성기(qrcodemaker.html)</br>
-11. 실시간 시계(livetime.html)</br>
-12. 체크리스트(checklist.html)</br>
-13. ChatAI(chatai.html)</br>
+9. QR 코드 생성기(qrcodemaker.html)</br>
+10. 실시간 시계(livetime.html)</br>
+11. 체크리스트(checklist.html)</br>
+12. ChatAI(chatai.html)</br>
 
 </details>
 <details>
