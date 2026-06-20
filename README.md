@@ -36,7 +36,7 @@ echo <문자>
         1. 디데이(d-day.html)</br>
 2. 타이머(timer.html)</br>
 3. 주사위 던지기(dice.html)</br>
-4. 랜덤 선택(random.html)</br>
+4. 랜덤 선택(random.html)(미완성)</br>
 5. 돌림판(circlepan.html)</br>
 6. 점수판(scoreboard.html)</br>
 7. 메모(memo.html)</br>
@@ -44,7 +44,8 @@ echo <문자>
 9. QR 코드 생성기(qrcodemaker.html)</br>
 10. 실시간 시계(livetime.html)</br>
 11. 체크리스트(checklist.html)</br>
-12. ChatAI(chatai.html)</br>
+12. ChatAI(chatai.html)(미완성)</br>
+13. 터미널(terminal.html)(미완성)
 
 </details>
 <details>
