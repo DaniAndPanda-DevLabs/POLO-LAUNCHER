@@ -59,4 +59,10 @@ def get_data(filename):
         return {"error": str(e)}, 500
     
 if __name__ == "__main__":
-    server = WSGIServer(("0.0.0.0", 6767), app, handler_class=WebSocketHandler)
+    server = WSGIServer(
+        ("0.0.0.0", 6767),
+        app,
+        handler_class=WebSocketHandler
+    )
+    print("Server started on http://0.0.0.0:6767")
+    server.serve_forever()
