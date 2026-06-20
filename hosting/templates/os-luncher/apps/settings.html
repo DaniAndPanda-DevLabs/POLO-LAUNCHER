@@ -45,10 +45,6 @@
         reader.onload = function(e) {
             const imageUrl = e.target.result;
 
-            document.body.style.backgroundImage = `url(${imageUrl})`;
-            document.body.style.backgroundSize = 'cover';
-            document.body.style.backgroundPosition = 'center';
-
             fetch('/api/set_background', {
                 method: 'POST',
                 headers: {
