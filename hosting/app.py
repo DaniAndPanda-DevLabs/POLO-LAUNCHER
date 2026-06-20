@@ -26,7 +26,7 @@ from flask_wtf import CSRFProtect
 from gevent.pywsgi import WSGIServer
 from geventwebsocket.handler import WebSocketHandler
 app = Flask(__name__)
-socketio = socketIO(app)
+socketio = SocketIO(app)
 db = SQLAlchemy(app)
 CSRFProtect(app)
 
