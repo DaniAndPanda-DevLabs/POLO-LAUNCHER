@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>설정</title>
+        <style>
+            body {
+                margin: 0;
+                font-family: sans-serif;
+            }
+            h1 {
+                text-align: center;
+            }
+            .setting-item {
+                margin: 20px;
+            }
+            label {
+                display: block;
+                margin-bottom: 5px;
+            }
+            input[type="file"] {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>설정</h1>
+        배경화면 선택
+        <div class="setting-item">
+            <label for="background-image-input">배경화면 선택</label>
+            <input type="file" id="background-image-input" accept="image/*">
+        </div>
+    <script>
+    const backgroundImageInput =
+        document.getElementById('background-image-input');
+
+    backgroundImageInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const imageUrl = e.target.result;
+
+            fetch('/api/set_background', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    imageUrl: imageUrl
+                })
+            });
+        };
+
+        reader.readAsDataURL(file);
+    });
+    </script>
+    </body>
+</html>
