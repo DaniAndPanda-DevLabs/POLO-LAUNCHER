@@ -7,7 +7,6 @@ def _ensure_dependencies():
     try:
         import flask  # noqa: F401
         import flask_socketio  # noqa: F401
-        import flask_sqlalchemy  # noqa: F401
         import flask_wtf  # noqa: F401
         import gevent  # noqa: F401
         import geventwebsocket  # noqa: F401
@@ -21,13 +20,11 @@ from gevent import monkey
 monkey.patch_all()
 from flask import *
 from flask_socketio import *
-from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 from gevent.pywsgi import WSGIServer
 from geventwebsocket.handler import WebSocketHandler
 app = Flask(__name__)
 socketio = SocketIO(app)
-db = SQLAlchemy(app)
 CSRFProtect(app)
 
 @app.route('/')
