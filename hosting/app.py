@@ -1,16 +1,19 @@
+import importlib.util
 import subprocess
 import sys
 from pathlib import Path
 
 
 def _ensure_dependencies():
-    try:
-        import flask  # noqa: F401
-        import flask_socketio  # noqa: F401
-        import flask_wtf  # noqa: F401
-        import gevent  # noqa: F401
-        import geventwebsocket  # noqa: F401
-    except ImportError:
+    required_packages = [
+        "flask",
+        "flask_socketio",
+        "flask_wtf",
+        "gevent",
+        "geventwebsocket",
+    ]
+    missing = [pkg for pkg in required_packages if importlib.util.find_spec(pkg) is None]
+    if missing:
         req = Path(__file__).resolve().parent / "requirements.txt"
         subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", str(req)])
 
