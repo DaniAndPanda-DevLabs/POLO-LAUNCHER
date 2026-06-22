@@ -6,11 +6,11 @@ POLO Launcher의 기능을 알아보세요
 <details>
     <summary>브랜치 규칙</summary>
 모든 수정사항이 있을 때는, 브랜치를 각자 만든 뒤, 그 브랜치에서 수정 후, 끌어와야 합니다.</br>
-브랜치 명은 'feature/닉네임/번경내용(welcome-screen 처럼)으로 해야 합니다.</br>
+브랜치 이름은 자유롭게 할 수 있지만 자기 깃허브 아이디가 포함되어야 합니다.</br>
+**예시: PandaDevLab_patch_9
 끌어오기 요청은 다른 사람이 수락해 줘야 합니다.</br>
 하지만, 3일 이내 수락이 안될 경우, 끌어오기 요청을 만든 사람이 수락할 수 있습니다.</br>
 </br>
-README.md와 .github폴더 내부를 수정하는 것은 끌어오기 요청이 필요 없습니다.</br>
 </details>
 <details>
 <summary>Shell</summary>
