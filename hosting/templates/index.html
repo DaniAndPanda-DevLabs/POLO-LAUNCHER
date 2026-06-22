@@ -55,22 +55,10 @@
         </div>
     </div>
     <script>
-        // set.txt에서 설정 상태 확인하여 리다이렉트
-        fetch('http://localhost:6767/get/data/set.txt')
-            .then(response => response.text())
-            .then(data => {
-                const firstLine = data.split('\n')[0].trim();
-                if (firstLine === 'seted=false') {
-                    window.location.href = './welcome/index.html';
-                } else if (firstLine === 'seted=true') {
-                    window.location.href = './os-luncher/luncher.html';
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                // 오류 시 기본으로 luncher로 이동
-                window.location.href = './os-luncher/luncher.html';
-            });
+        // 5초 후에 OS 런처 페이지로 이동
+        setTimeout(function() {
+        window.location.href = './os-luncher/luncher.html';
+        }, 5000);
     </script>
 </body>
 </html>
