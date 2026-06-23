@@ -1,0 +1,9 @@
+<xml>
+    <predict_need-apps>
+        <ollama>
+        </ollama>
+        <gemma4-4B>
+        https://huggingface.co/google/gemma-4-E4B
+        </gemma4-4B>
+    </predict_need-apps>
+</xml>
