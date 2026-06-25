@@ -153,25 +153,25 @@ button{
 
     <section class="slide">
         <div class="icon">🤖</div>
-        <h1>Ai 설정</h1>
+        <h1>이용약관 동의</h1><br>
         <p>
-            ai 기능을 사용하시겠습니까?
-<input type="radio" name="ai" value="사용"> Ai 기능 사용
-<input type="radio" name="ai" value="사용안함"> Ai 기능 사용 안함
-
+            시작하려면 이용약관에 동의해 주세요.
+            <input type="radio" name="terms" value="동의"> Ai의 오류 및 오작동에 대한 책임을 지지 않습니다.에 동의합니다.<br>
+            <input type="radio" name="terms" value="동의안함"> Ai의 오류 및 오작동에 대한 책임을 지지 않습니다.에 동의하지 않습니다.
         </p>
     </section>
     <section class="slide">
-        <h1>이 Launcher의 특장점</h1>
-        <h2><div class=icon>📶</div>무시무시한 속도</h2>
-        <br><br>
-        <input type="radio" name="ok" value="수락">
-    </section>
-    <section class="slide">
-        <div class="icon">⚡</div>
-        <h1>업데이트</h1>
+        <div class="icon">🤖</div>
+        <h1>ai 개인화하기</h1>
         <p>
-            업데이트를 확인하고 있습니다...
+            Ai를 개인화해 봅시다.(정보는 외부로 전송되지 않으며, 이 기기에 안전하게 저장됩니다.)<br>
+            이름 : <input type="text" name="name" placeholder="이름을 입력하세요"><br>
+            나이 : <input type="number" name="age" placeholder="나이를 입력하세요"><br>
+            직업 : <input type="text" name="occupation" placeholder="직업을 입력하세요"><br>
+            좋아하는 것 : <input type="text" name="likes" placeholder="좋아하는 것을 입력하세요"><br>
+            잘하는 것 : <input type="text" name="skills" placeholder="잘하는 것을 입력하세요"><br>
+            원하는 말투 : <input type="text" name="tone" placeholder="원하는 말투를 입력하세요"><br>
+            <strong>만일 입력을 원하지 않으신다만 그대로 두셔도 됩니다. Ai는 기본 설정으로 작동합니다.</strong>
         </p>
     </section>
 
@@ -233,28 +233,12 @@ function updateSlider() {
 }
 
 nextBtn.addEventListener("click",()=>{
-    // 1번째 슬라이드(테마 선택) 체크 확인
-    if (current === 0) {
-        const themeChecked = document.querySelector('input[name="theme"]:checked');
-        if (!themeChecked) {
-            alert("다크모드 또는 화이트모드를 선택해주세요!");
-            return; // 선택 안 했으면 여기서 함수를 종료해서 안 넘어가게 막아요.
-        }
-    }
 
     // 2번째 슬라이드(AI 설정) 체크 확인
     if (current === 1) {
-        const aiChecked = document.querySelector('input[name="ai"]:checked');
+        const aiChecked = document.querySelector('input[name="terms"]:checked');
         if (!aiChecked) {
             alert("AI 기능 사용 여부를 선택해주세요!");
-            return; // 선택 안 했으면 안 넘어가게 막아요.
-        }
-    }
-    // 3번째 슬라이드 체크 확인
-    if (current === 1) {
-        const aiChecked = document.querySelector('input[name="ok"]:checked');
-        if (!aiChecked) {
-            alert("특장점을 수락하세요!");
             return; // 선택 안 했으면 안 넘어가게 막아요.
         }
     }
@@ -275,7 +259,7 @@ dots.forEach((dot,index)=>{
 });
 
 startBtn.addEventListener("click",()=>{
-    window.location.href = "../os-luncher/luncher.html";
+    window.location.href = "./chat.html";
 });
 
 
