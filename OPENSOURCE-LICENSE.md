@@ -2,4 +2,6 @@
 
 | 제목 | 라이선스 | github 주소 |
 |---|---|---|
-| 1 | MIT | https://github.com/ |
+| Danidevlab/dani-homepage/404.html | MIT | https://github.com/danidevlab/dani-homepage/blob/main/404.html |
+| DaniDevLab & PandaDevLab/POLO-LAUNCHER | MIT | https://github.com/DaniAndPanda-DevLabs/POLO-LAUNCHER? |
+| Python | PSFL | https://www.python.org/ |
