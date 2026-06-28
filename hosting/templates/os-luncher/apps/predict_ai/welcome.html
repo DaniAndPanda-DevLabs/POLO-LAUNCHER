@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Predict ai setting</title>
-
+<title>Predict AI Setting</title>
 
 <style>
 *{
@@ -46,10 +45,10 @@ body{
 }
 
 .slide p{
-    max-width:600px;
+    max-width:700px;
     color:#9aa4b2;
     font-size:20px;
-    line-height:1.7;
+    line-height:1.8;
 }
 
 .icon{
@@ -58,35 +57,37 @@ body{
 }
 
 .slide:nth-child(1){
-    background:linear-gradient(
-        135deg,
-        #10151d,
-        #161d2b
-    );
+    background:linear-gradient(135deg,#10151d,#161d2b);
 }
 
 .slide:nth-child(2){
-    background:linear-gradient(
-        135deg,
-        #121826,
-        #1b2440
-    );
+    background:linear-gradient(135deg,#121826,#1b2440);
 }
 
 .slide:nth-child(3){
-    background:linear-gradient(
-        135deg,
-        #13141f,
-        #25283a
-    );
+    background:linear-gradient(135deg,#13141f,#25283a);
 }
 
 .slide:nth-child(4){
-    background:linear-gradient(
-        135deg,
-        #141722,
-        #1d2e4f
-    );
+    background:linear-gradient(135deg,#141722,#1d2e4f);
+}
+
+.slide label{
+    display:block;
+    margin:15px 0;
+    cursor:pointer;
+}
+
+.slide input[type=text],
+.slide input[type=number]{
+    width:320px;
+    padding:12px;
+    margin:8px 0;
+    border:none;
+    border-radius:10px;
+    background:#1f2937;
+    color:white;
+    font-size:16px;
 }
 
 .controls{
@@ -144,40 +145,60 @@ button{
 <div class="slider" id="slider">
 
     <section class="slide">
-        <div class="icon">🙍</div>
+        <div class="icon">🤖</div>
         <h1>Hallo!</h1>
         <p>
-            안녕하세요! 저는 Predict Ai 입니다. 함께 시작해 볼까요?<br><br>
+            안녕하세요! 저는 Predict AI입니다.<br>
+            함께 시작해 볼까요?
         </p>
     </section>
 
     <section class="slide">
-        <div class="icon">🤖</div>
-        <h1>이용약관 동의</h1><br>
-        <p>
-            시작하려면 이용약관에 동의해 주세요.
-            <input type="radio" name="terms" value="동의"> Ai의 오류 및 오작동에 대한 책임을 지지 않습니다.에 동의합니다.<br>
-            <input type="radio" name="terms" value="동의안함"> Ai의 오류 및 오작동에 대한 책임을 지지 않습니다.에 동의하지 않습니다.
-        </p>
+        <div class="icon">📜</div>
+        <h1>이용약관 동의</h1>
+
+        AI의 오류 또는 오작동으로 인해 발생하는 문제<br>에 대해
+        서비스 제공자의 책임이 없습니다.<br>
+        <br>
+        <label>
+
+            <input type="radio" name="terms" value="agree">
+            동의합니다.
+        </label>
+        <label>
+            <input type="radio" name="terms" value="disagree">
+            동의하지 않습니다.
+        </label>
     </section>
+
     <section class="slide">
-        <div class="icon">🤖</div>
-        <h1>ai 개인화하기</h1>
+        <div class="icon">⚙️</div>
+        <h1>AI 개인화하기</h1>
+
         <p>
-            Ai를 개인화해 봅시다.(정보는 외부로 전송되지 않으며, 이 기기에 안전하게 저장됩니다.)<br>
-            이름 : <input type="text" name="name" placeholder="이름을 입력하세요"><br>
-            나이 : <input type="number" name="age" placeholder="나이를 입력하세요"><br>
-            직업 : <input type="text" name="occupation" placeholder="직업을 입력하세요"><br>
-            좋아하는 것 : <input type="text" name="likes" placeholder="좋아하는 것을 입력하세요"><br>
-            잘하는 것 : <input type="text" name="skills" placeholder="잘하는 것을 입력하세요"><br>
-            원하는 말투 : <input type="text" name="tone" placeholder="원하는 말투를 입력하세요"><br>
-            <strong>만일 입력을 원하지 않으신다만 그대로 두셔도 됩니다. Ai는 기본 설정으로 작동합니다.</strong>
+            정보는 외부로 전송되지 않고 이 기기에만 저장됩니다.
         </p>
+
+        <br>
+
+        <input type="text" name="name" placeholder="이름">
+        <input type="number" name="age" placeholder="나이">
+        <input type="text" name="occupation" placeholder="직업">
+        <input type="text" name="likes" placeholder="좋아하는 것">
+        <input type="text" name="skills" placeholder="잘하는 것">
+        <input type="text" name="tone" placeholder="원하는 말투">
+
+        <br>
+
+        <strong>
+            입력하지 않아도 기본 설정으로 작동합니다.
+        </strong>
     </section>
 
     <section class="slide">
         <div class="icon">🚀</div>
         <h1>완료되었습니다!</h1>
+
         <p>
             지금 바로 시작해 볼까요?
         </p>
@@ -211,7 +232,7 @@ const startBtn = document.getElementById("startBtn");
 
 let current = 0;
 
-function updateSlider() {
+function updateSlider(){
 
     slider.style.transform =
         `translateX(-${current * 100}vw)`;
@@ -234,35 +255,72 @@ function updateSlider() {
 
 nextBtn.addEventListener("click",()=>{
 
-    // 2번째 슬라이드(AI 설정) 체크 확인
-    if (current === 1) {
-        const aiChecked = document.querySelector('input[name="terms"]:checked');
-        if (!aiChecked) {
-            alert("AI 기능 사용 여부를 선택해주세요!");
-            return; // 선택 안 했으면 안 넘어가게 막아요.
+    // 이용약관 페이지 검사
+    if(current === 1){
+
+        const checked =
+            document.querySelector('input[name="terms"]:checked');
+
+        if(!checked){
+            alert("이용약관 동의 여부를 선택해주세요.");
+            return;
+        }
+
+        if(checked.value === "disagree"){
+            alert("서비스를 이용하려면 이용약관에 동의해야 합니다.");
+            return;
         }
     }
 
-    // 모든 조건이 통과되면 다음 슬라이드로 이동합니다.
     if(current < 3){
         current++;
         updateSlider();
     }
 });
 
-
 dots.forEach((dot,index)=>{
     dot.addEventListener("click",()=>{
+
+        // 이용약관 미동의 상태에서 다음 페이지 이동 방지
+        if(index > 1){
+
+            const checked =
+                document.querySelector('input[name="terms"]:checked');
+
+            if(!checked){
+                alert("이용약관에 동의해주세요.");
+                return;
+            }
+
+            if(checked.value === "disagree"){
+                alert("서비스를 이용하려면 이용약관에 동의해야 합니다.");
+                return;
+            }
+        }
+
         current = index;
         updateSlider();
     });
 });
 
 startBtn.addEventListener("click",()=>{
+
+    const userData = {
+        name:document.querySelector('[name="name"]').value,
+        age:document.querySelector('[name="age"]').value,
+        occupation:document.querySelector('[name="occupation"]').value,
+        likes:document.querySelector('[name="likes"]').value,
+        skills:document.querySelector('[name="skills"]').value,
+        tone:document.querySelector('[name="tone"]').value
+    };
+
+    localStorage.setItem(
+        "predict_ai_profile",
+        JSON.stringify(userData)
+    );
+
     window.location.href = "./chat.html";
 });
-
-
 </script>
 
 </body>
