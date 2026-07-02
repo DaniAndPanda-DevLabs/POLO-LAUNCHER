@@ -150,6 +150,36 @@ async function deriveKey(password, salt){
     );
 }
 
+function formatBytes(bytes){
+    const mb = bytes / 1024 / 1024;
+    return mb.toFixed(1) + "MB";
+}
+
+async function readFileWithProgress(file, onProgress){
+    const reader = file.stream().getReader();
+    const chunks = [];
+    let loaded = 0;
+    const total = file.size;
+
+    while(true){
+        const {done, value} = await reader.read();
+        if(done) break;
+        chunks.push(value);
+        loaded += value.byteLength;
+        onProgress?.(loaded, total);
+    }
+
+    const result = new Uint8Array(loaded);
+    let offset = 0;
+
+    for(const chunk of chunks){
+        result.set(chunk, offset);
+        offset += chunk.byteLength;
+    }
+
+    return result.buffer;
+}
+
 async function encryptFile(){
     const file = document.getElementById("file").files[0];
     const password = document.getElementById("password").value;
@@ -158,9 +188,11 @@ async function encryptFile(){
     if(!password) return setStatus("비밀번호를 입력하세요.");
 
     try{
-        setStatus("암호화 중...");
+        setStatus(`암호화 중(0MB/${formatBytes(file.size)})`);
 
-        const data = await file.arrayBuffer();
+        const data = await readFileWithProgress(file, (loaded, total) => {
+            setStatus(`암호화 중(${formatBytes(loaded)}/${formatBytes(total)})`);
+        });
 
         const salt = crypto.getRandomValues(new Uint8Array(16));
         const iv = crypto.getRandomValues(new Uint8Array(12));
@@ -204,9 +236,11 @@ async function decryptFile(){
     if(!password) return setStatus("비밀번호를 입력하세요.");
 
     try{
-        setStatus("복호화 중...");
+        setStatus(`복호화 중(0MB/${formatBytes(file.size)})`);
 
-        const data = new Uint8Array(await file.arrayBuffer());
+        const data = new Uint8Array(await readFileWithProgress(file, (loaded, total) => {
+            setStatus(`복호화 중(${formatBytes(loaded)}/${formatBytes(total)})`);
+        }));
 
         const salt = data.slice(0,16);
         const iv = data.slice(16,28);
