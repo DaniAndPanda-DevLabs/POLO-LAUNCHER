@@ -1,5 +1,5 @@
 # POLO-LAUNCHER
-Polo luncher is great luncher. Made with danilab
+Polo launcher is great luncher. Made with danidevlab, PandaDevLab
 
 POLO Launcher의 기능을 알아보세요
 
@@ -71,8 +71,5 @@ log기능 있음.</br>
 </details>
 <details>
 <summary>일정</summary>
-프론트앤드/백엔드 각각 제작 : 2026년 6월 16일 ~ 2026년 6월 23일</br>
-백엔드&프론트앤드 데이터 송수신 설정 : 2026년 6월 24일 ~ 2026년 6월 30일</br>
-오류 검사&수정 : 2026년 7월 1일 ~ 2026년 7월 8일</br>
-배포 : 7월 9일
+7월 1일 오후 2시 40분 전화 통화를 통한 결정
 </details>
