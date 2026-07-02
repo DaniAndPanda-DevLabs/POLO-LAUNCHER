@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Web Desktop Environment</title>
+    <title>POLO LAUNCHER</title>
     <style>
         body {
             margin: 0;
@@ -135,6 +135,11 @@
             width: 100% !important;
             height: calc(100vh - 50px) !important;
         }
+
+        #livetime{
+            margin-left: auto;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -156,6 +161,9 @@
         <button class="taskbar-app" title="체크리스트">✅</button>
         <button class="taskbar-app" title="ChatAI">🤖</button>
         <button class="taskbar-app" title="game">🎮</button>
+        <button class="taskbar-app" title="파일 암호화">🔒</button>
+        <div id="livetime">2026-07-02<br>
+        오루 3:13</div>
     </div>
 
     <div id="desktop"></div>
@@ -175,8 +183,29 @@
             '체크리스트': './apps/checklist.html',
             'ChatAI': './apps/chatai.html',
             '설정': './apps/settings.html',
-            '게임': "./apps/game.htmml"
+            '파일 암호화': './apps/filesecurety.html',
+            'game': "./apps/game.html"
         };
+
+        function updateClock() {
+        const now = new Date();
+
+        const y = now.getFullYear();
+        const m = String(now.getMonth() + 1).padStart(2, "0");
+        const d = String(now.getDate()).padStart(2, "0");
+
+        let h = now.getHours();
+        const min = String(now.getMinutes()).padStart(2, "0");
+
+        const ampm = h >= 12 ? "오후" : "오전";
+        h = h % 12 || 12;
+
+        document.getElementById("livetime").innerHTML =
+            `${y}-${m}-${d}<br>${ampm} ${h}:${min}`;
+    }
+
+        updateClock();
+        setInterval(updateClock, 1000);
 
         const desktop = document.getElementById("desktop");
         const imageUrl = 'https://picsum.photos/1920/1080'; 
