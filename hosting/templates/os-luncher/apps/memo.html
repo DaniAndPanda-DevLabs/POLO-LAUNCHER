@@ -240,6 +240,8 @@ function openPopup_hiclass(){
     // 클립보드에 복사
     navigator.clipboard.writeText(document.getElementById("content").value);
 
+    alert("메모 내용이 클립보드에 복사되었습니다. 하이클래스 알림장 작성 페이지에서 붙여넣기(Ctrl+V) 하세요.");
+
     window.open(
         "https://www.hiclass.net/main/home",
         "eventPopup",
@@ -250,6 +252,8 @@ function openPopup_hiclass(){
 function openPopup_google(){
     // 클립보드에 복사
     navigator.clipboard.writeText(document.getElementById("content").value);
+
+    alert("메모 내용이 클립보드에 복사되었습니다. 구글 클래스룸 공지사항 작성 페이지에서 붙여넣기(Ctrl+V) 하세요.");
 
     window.open(
         "https://classroom.google.com",
