@@ -237,29 +237,38 @@ button:hover{
 
 <script>
 function openPopup_hiclass(){
+    fetch("http://localhost:6766/logwrite/?writedata=memo_fuctioncalled_openPopup_hiclass");
+
     // 클립보드에 복사
     navigator.clipboard.writeText(document.getElementById("content").value);
+    fetch(`http://localhost:6766/logwrite/?writedata=memo_clipboard-write_${encodeURIComponent(document.getElementById("content").value)}`);
 
     alert("메모 내용이 클립보드에 복사되었습니다. 하이클래스 알림장 작성 페이지에서 붙여넣기(Ctrl+V) 하세요.");
+    fetch(`http://localhost:6766/logwrite/?writedata=memo_alert_success`);
 
     window.open(
         "https://www.hiclass.net/main/home",
         "eventPopup",
         "width=1200,height=750,left=100,top=100"
     );
+    fetch(`http://localhost:6766/logwrite/?writedata=memo_windowopen-hiclass_success`);
 }
 
 function openPopup_google(){
+    fetch("http://localhost:6766/logwrite/?writedata=memo_fuctioncalled_openPopup_googleclassroom");
+
     // 클립보드에 복사
     navigator.clipboard.writeText(document.getElementById("content").value);
+    fetch(`http://localhost:6766/logwrite/?writedata=memo_clipboard-write_${encodeURIComponent(document.getElementById("content").value)}`);
 
     alert("메모 내용이 클립보드에 복사되었습니다. 구글 클래스룸 공지사항 작성 페이지에서 붙여넣기(Ctrl+V) 하세요.");
-
+    fetch(`http://localhost:6766/logwrite/?writedata=memo_alert_success`);
     window.open(
         "https://classroom.google.com",
         "eventPopup",
         "width=1200,height=750,left=100,top=100"
     );
+    fetch(`http://localhost:6766/logwrite/?writedata=memo_windowopen-googleclassroom_success`);
 }
 
 let pages =
