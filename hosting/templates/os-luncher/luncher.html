@@ -403,6 +403,7 @@
             // 닫기
             win.querySelector(".close-btn").onclick = () => {
                 win.remove();
+                fetch("http://localhost:6766/logwrite/?writedata=launcher_windowclose_success");
             };
 
             // 최소화 (접기/펴기)
@@ -411,6 +412,7 @@
                 // [수정] 최대화 상태일 때는 최소화(접기)가 작동하지 않도록 방어 코드 추가
                 if(win.classList.contains("maximized")) win.classList.remove("maximized");
                 win.classList.toggle("minimized");
+                fetch("http://localhost:6766/logwrite/?writedata=launcher_windowminimize_success");
             };
 
             // 최대화
@@ -419,6 +421,7 @@
                 // [수정] 최소화(접힌) 상태에서 최대화를 누르면 먼저 펼치도록 처리
                 if(win.classList.contains("minimized")) win.classList.remove("minimized");
                 win.classList.toggle("maximized");
+                fetch("http://localhost:6766/logwrite/?writedata=launcher_windowmaximize_success");
             };
 
             // 드래그 로직
@@ -458,6 +461,7 @@
                 const appName = button.title;
                 if (app_links[appName]) {
                     createWindow(appName, app_links[appName]);
+                    fetch("http://localhost:6766/logwrite/?writedata=launcher_windowopen_success");
                 }
             });
         });
