@@ -73,3 +73,21 @@ log기능 있음.</br>
 <summary>일정</summary>
 7월 1일 오후 2시 40분 전화 통화를 통한 결정
 </details>
+<details>
+<summary>로그</summary>
+/log/log.txt에 저장됨.<br>
+
+---
+
+예시코드<br>
+<code>fetch("http://localhost:6766/logwrite/?writedata=쓸 내용");<code><br>
+
+---
+
+로그 작성 결과 예시<br>
+<code>
+    memosaved(2026-07-05_14:11:10, page1)<br>
+    memosaved(2026-07-05_14:11:15, page1)<br>
+    memosaved(2026-07-05_14:11:17, page3)<br>
+</code><br>
+</details>
