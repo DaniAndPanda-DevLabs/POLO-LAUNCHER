@@ -72,12 +72,93 @@
             position: absolute;
             width: 900px;
             height: 600px;
+            min-width: 260px;
+            min-height: 180px;
             background: white;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, .3);
             display: flex;
             flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .window.resizing {
+            user-select: none;
+        }
+
+        .window.resizing iframe {
+            pointer-events: none;
+        }
+
+        .resize-handle {
+            position: absolute;
+            background: transparent;
+            z-index: 2;
+        }
+
+        .resize-handle.n {
+            top: -2px;
+            left: 8px;
+            right: 8px;
+            height: 8px;
+            cursor: n-resize;
+        }
+
+        .resize-handle.e {
+            top: 8px;
+            right: -2px;
+            bottom: 8px;
+            width: 8px;
+            cursor: e-resize;
+        }
+
+        .resize-handle.s {
+            left: 8px;
+            right: 8px;
+            bottom: -2px;
+            height: 8px;
+            cursor: s-resize;
+        }
+
+        .resize-handle.w {
+            top: 8px;
+            left: -2px;
+            bottom: 8px;
+            width: 8px;
+            cursor: w-resize;
+        }
+
+        .resize-handle.ne {
+            top: -2px;
+            right: -2px;
+            width: 12px;
+            height: 12px;
+            cursor: ne-resize;
+        }
+
+        .resize-handle.nw {
+            top: -2px;
+            left: -2px;
+            width: 12px;
+            height: 12px;
+            cursor: nw-resize;
+        }
+
+        .resize-handle.se {
+            right: -2px;
+            bottom: -2px;
+            width: 12px;
+            height: 12px;
+            cursor: se-resize;
+        }
+
+        .resize-handle.sw {
+            left: -2px;
+            bottom: -2px;
+            width: 12px;
+            height: 12px;
+            cursor: sw-resize;
         }
 
         .window-header {
@@ -251,6 +332,69 @@
 
             desktop.appendChild(win);
             win.style.zIndex = ++zIndexCounter;
+
+            ['n', 'e', 's', 'w', 'ne', 'nw', 'se', 'sw'].forEach(direction => {
+                const handle = document.createElement('div');
+                handle.className = `resize-handle ${direction}`;
+                win.appendChild(handle);
+
+                handle.addEventListener('mousedown', (e) => {
+                    if (win.classList.contains('maximized') || win.classList.contains('minimized')) return;
+
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const startX = e.clientX;
+                    const startY = e.clientY;
+                    const startWidth = win.offsetWidth;
+                    const startHeight = win.offsetHeight;
+                    const startLeft = win.offsetLeft;
+                    const startTop = win.offsetTop;
+
+                    win.classList.add('resizing');
+                    document.body.style.userSelect = 'none';
+
+                    const onMouseMove = (moveEvent) => {
+                        const deltaX = moveEvent.clientX - startX;
+                        const deltaY = moveEvent.clientY - startY;
+
+                        let newWidth = startWidth;
+                        let newHeight = startHeight;
+                        let newLeft = startLeft;
+                        let newTop = startTop;
+
+                        if (direction.includes('e')) {
+                            newWidth = Math.max(260, startWidth + deltaX);
+                        }
+                        if (direction.includes('w')) {
+                            newWidth = Math.max(260, startWidth - deltaX);
+                            newLeft = startLeft + (startWidth - newWidth);
+                        }
+                        if (direction.includes('s')) {
+                            newHeight = Math.max(180, startHeight + deltaY);
+                        }
+                        if (direction.includes('n')) {
+                            newHeight = Math.max(180, startHeight - deltaY);
+                            newTop = startTop + (startHeight - newHeight);
+                        }
+
+                        win.style.width = `${newWidth}px`;
+                        win.style.height = `${newHeight}px`;
+                        win.style.left = `${newLeft}px`;
+                        win.style.top = `${newTop}px`;
+                    };
+
+                    const onMouseUp = () => {
+                        document.removeEventListener('mousemove', onMouseMove);
+                        document.removeEventListener('mouseup', onMouseUp);
+                        win.classList.remove('resizing');
+                        document.body.style.userSelect = '';
+                    };
+
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', onMouseUp);
+                });
+            });
 
             win.addEventListener("mousedown", () => {
                 win.style.zIndex = ++zIndexCounter;
