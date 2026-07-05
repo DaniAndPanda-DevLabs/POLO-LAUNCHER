@@ -237,6 +237,9 @@ button:hover{
 
 <script>
 function openPopup_hiclass(){
+    // 클립보드에 복사
+    navigator.clipboard.writeText(document.getElementById("content").value);
+
     window.open(
         "https://www.hiclass.net/main/home",
         "eventPopup",
