@@ -117,7 +117,13 @@ small{
 </div>
 
 <script>
+function logAppEvent(message) {
+    const timestamp = new Date().toISOString();
+    fetch(`http://localhost:6766/logwrite/?writedata=${encodeURIComponent(`[${timestamp}] ${message}`)}`);
+}
+
 const statusEl = document.getElementById("status");
+logAppEvent("filesecurety_page_loaded");
 
 function setStatus(msg){
     statusEl.textContent = msg;
@@ -182,6 +188,7 @@ async function readFileWithProgress(file, onProgress){
 }
 
 async function encryptFile(){
+    logAppEvent("filesecurety_encrypt_started");
     const file = document.getElementById("file").files[0];
     const password = document.getElementById("password").value;
 
@@ -223,13 +230,16 @@ async function encryptFile(){
         downloadBlob(blob, file.name + ".enc");
 
         setStatus("암호화 완료!");
+        logAppEvent(`filesecurety_encrypt_completed_${file.name}`);
     }catch(err){
         console.error(err);
         setStatus("암호화 실패");
+        logAppEvent(`filesecurety_encrypt_failed_${file?.name || "unknown"}`);
     }
 }
 
 async function decryptFile(){
+    logAppEvent("filesecurety_decrypt_started");
     const file = document.getElementById("file").files[0];
     const password = document.getElementById("password").value;
 
@@ -271,9 +281,11 @@ async function decryptFile(){
         downloadBlob(blob, outputName);
 
         setStatus("복호화 완료!");
+        logAppEvent(`filesecurety_decrypt_completed_${file.name}`);
     }catch(err){
         console.error(err);
         setStatus("복호화 실패 (비밀번호가 틀렸거나 파일이 손상됨)");
+        logAppEvent(`filesecurety_decrypt_failed_${file?.name || "unknown"}`);
     }
 }
 

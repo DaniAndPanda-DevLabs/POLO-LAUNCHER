@@ -224,6 +224,13 @@ button{
 </div>
 
 <script>
+function logAppEvent(message) {
+const timestamp = new Date().toISOString();
+fetch(`http://localhost:6766/logwrite/?writedata=${encodeURIComponent(`[${timestamp}] ${message}`)}`);
+}
+
+logAppEvent('predict_welcome_page_loaded');
+
 const slider = document.getElementById("slider");
 const dots = document.querySelectorAll(".dot");
 
@@ -254,6 +261,7 @@ function updateSlider(){
 }
 
 nextBtn.addEventListener("click",()=>{
+    logAppEvent(`predict_welcome_next_${current}`);
 
     // 이용약관 페이지 검사
     if(current === 1){
@@ -280,6 +288,7 @@ nextBtn.addEventListener("click",()=>{
 
 dots.forEach((dot,index)=>{
     dot.addEventListener("click",()=>{
+        logAppEvent(`predict_welcome_dot_${index}`);
 
         // 이용약관 미동의 상태에서 다음 페이지 이동 방지
         if(index > 1){
@@ -304,6 +313,7 @@ dots.forEach((dot,index)=>{
 });
 
 startBtn.addEventListener("click",()=>{
+    logAppEvent('predict_welcome_start_clicked');
 
     const userData = {
         name:document.querySelector('[name="name"]').value,
