@@ -166,6 +166,12 @@ color:#ef4444;
 </div>
 
 <script>
+function logAppEvent(message) {
+const timestamp = new Date().toISOString();
+fetch(`http://localhost:6766/logwrite/?writedata=${encodeURIComponent(`[${timestamp}] ${message}`)}`);
+}
+
+logAppEvent('noise_meter_page_loaded');
 
 let maxDb=0;
 let values=[];
@@ -240,6 +246,7 @@ class:"red"
 }
 
 async function start(){
+logAppEvent('noise_meter_started');
 
 const stream=
 await navigator.mediaDevices.getUserMedia({
@@ -389,7 +396,10 @@ document
 
 document
 .getElementById("startBtn")
-.addEventListener("click",start);
+.addEventListener("click",()=>{
+logAppEvent('noise_meter_button_clicked');
+start();
+});
 
 </script>
 

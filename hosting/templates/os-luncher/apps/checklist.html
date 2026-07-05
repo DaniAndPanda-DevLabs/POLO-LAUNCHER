@@ -345,6 +345,13 @@
   </div>
 
   <script>
+    function logAppEvent(message) {
+      const timestamp = new Date().toISOString();
+      fetch(`http://localhost:6766/logwrite/?writedata=${encodeURIComponent(`[${timestamp}] ${message}`)}`);
+    }
+
+    logAppEvent('checklist_page_loaded');
+
     const STORAGE_KEY = 'checklist_v2_items';
     const DEFAULT_ITEMS = [
       { text: '아침 운동하기', done: false },
@@ -373,6 +380,7 @@
 
     // 데이터 내보내기 (JSON 파일)
     function exportData() {
+      logAppEvent('checklist_export_clicked');
       const dataStr = JSON.stringify(items, null, 2);
       const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
       
@@ -386,6 +394,7 @@
 
     // 데이터 불러오기
     function importData(event) {
+      logAppEvent('checklist_import_started');
       const file = event.target.files[0];
       if (!file) return;
 
@@ -412,6 +421,7 @@
 
     // 전체 초기화
     function resetAll() {
+      logAppEvent('checklist_reset_clicked');
       if (confirm('모든 데이터를 삭제하고 초기 상태로 되돌리시겠습니까?')) {
         items = [...DEFAULT_ITEMS];
         save();
@@ -475,6 +485,7 @@
     }
 
     function addItem() {
+      logAppEvent('checklist_add_item_clicked');
       const input = document.getElementById('newItemInput');
       const text = input.value.trim();
       if (!text) return;
@@ -486,18 +497,21 @@
     }
 
     function toggleItem(idx) {
+      logAppEvent(`checklist_toggle_item_${idx}`);
       items[idx].done = !items[idx].done;
       save();
       render();
     }
 
     function deleteItem(idx) {
+      logAppEvent(`checklist_delete_item_${idx}`);
       items.splice(idx, 1);
       save();
       render();
     }
 
     function clearDone() {
+      logAppEvent('checklist_clear_done_clicked');
       if (items.some(i => i.done)) {
         items = items.filter(i => !i.done);
         save();
@@ -506,6 +520,7 @@
     }
 
     function setFilter(filter, btn) {
+      logAppEvent(`checklist_filter_${filter}`);
       currentFilter = filter;
       document.querySelectorAll('.filter-tabs button').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -513,7 +528,10 @@
     }
 
     document.getElementById('newItemInput').addEventListener('keydown', e => {
-      if (e.key === 'Enter') addItem();
+      if (e.key === 'Enter') {
+        logAppEvent('checklist_enter_add_item');
+        addItem();
+      }
     });
 
     // 초기 렌더링

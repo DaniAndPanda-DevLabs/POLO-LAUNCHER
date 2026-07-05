@@ -207,6 +207,13 @@ button{
 <div id="result">버튼을 눌러 주세요</div>
 
 <script>
+function logAppEvent(message) {
+    const timestamp = new Date().toISOString();
+    fetch(`http://localhost:6766/logwrite/?writedata=${encodeURIComponent(`[${timestamp}] ${message}`)}`);
+}
+
+logAppEvent("dice_page_loaded");
+
 const rotations = {
     1: "rotateX(0deg) rotateY(0deg)",
     2: "rotateX(90deg) rotateY(0deg)",
@@ -221,6 +228,7 @@ function randomInt(min,max){
 }
 
 function rollDice(){
+    logAppEvent("dice_roll_started");
 
     const d1 = randomInt(1,6);
     const d2 = randomInt(1,6);

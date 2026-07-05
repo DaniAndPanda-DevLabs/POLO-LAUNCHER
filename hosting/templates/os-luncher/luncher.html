@@ -299,6 +299,11 @@
 
         let zIndexCounter = 100;
 
+        function logLauncherEvent(message) {
+            const timestamp = new Date().toISOString();
+            fetch(`http://localhost:6766/logwrite/?writedata=${encodeURIComponent(`[${timestamp}] ${message}`)}`);
+        }
+
         function createWindow(title, url) {
             // 이미 열려있는 창이 있는지 확인
             const windows = document.querySelectorAll('.window');
@@ -307,6 +312,7 @@
                     // 최소화 상태였다면 해제하고 맨 앞으로 가져오기
                     w.classList.remove('minimized');
                     w.style.zIndex = ++zIndexCounter;
+                    logLauncherEvent(`launcher_window_restore_${title}`);
                     return;
                 }
             }
@@ -330,8 +336,14 @@
                 <iframe src="${url}"></iframe>
             `;
 
+            const iframe = win.querySelector('iframe');
+            iframe.addEventListener('load', () => {
+                logLauncherEvent(`launcher_iframe_loaded_${title}`);
+            });
+
             desktop.appendChild(win);
             win.style.zIndex = ++zIndexCounter;
+            logLauncherEvent(`launcher_window_created_${title}`);
 
             ['n', 'e', 's', 'w', 'ne', 'nw', 'se', 'sw'].forEach(direction => {
                 const handle = document.createElement('div');
@@ -353,6 +365,8 @@
 
                     win.classList.add('resizing');
                     document.body.style.userSelect = 'none';
+
+                    logLauncherEvent(`launcher_window_resize_start_${title}_${direction}`);
 
                     const onMouseMove = (moveEvent) => {
                         const deltaX = moveEvent.clientX - startX;
@@ -382,6 +396,7 @@
                         win.style.height = `${newHeight}px`;
                         win.style.left = `${newLeft}px`;
                         win.style.top = `${newTop}px`;
+                        logLauncherEvent(`launcher_window_resize_${title}_${direction}_${Math.round(newWidth)}x${Math.round(newHeight)}`);
                     };
 
                     const onMouseUp = () => {
@@ -398,12 +413,13 @@
 
             win.addEventListener("mousedown", () => {
                 win.style.zIndex = ++zIndexCounter;
+                logLauncherEvent(`launcher_window_focus_${title}`);
             });
 
             // 닫기
             win.querySelector(".close-btn").onclick = () => {
                 win.remove();
-                fetch("http://localhost:6766/logwrite/?writedata=launcher_windowclose_success");
+                logLauncherEvent(`launcher_window_close_${title}`);
             };
 
             // 최소화 (접기/펴기)
@@ -412,7 +428,7 @@
                 // [수정] 최대화 상태일 때는 최소화(접기)가 작동하지 않도록 방어 코드 추가
                 if(win.classList.contains("maximized")) win.classList.remove("maximized");
                 win.classList.toggle("minimized");
-                fetch("http://localhost:6766/logwrite/?writedata=launcher_windowminimize_success");
+                logLauncherEvent(`launcher_window_minimize_${title}_${win.classList.contains("minimized") ? "minimized" : "restored"}`);
             };
 
             // 최대화
@@ -421,7 +437,7 @@
                 // [수정] 최소화(접힌) 상태에서 최대화를 누르면 먼저 펼치도록 처리
                 if(win.classList.contains("minimized")) win.classList.remove("minimized");
                 win.classList.toggle("maximized");
-                fetch("http://localhost:6766/logwrite/?writedata=launcher_windowmaximize_success");
+                logLauncherEvent(`launcher_window_maximize_${title}_${win.classList.contains("maximized") ? "maximized" : "restored"}`);
             };
 
             // 드래그 로직
@@ -435,6 +451,7 @@
 
                 dragging = true;
                 win.classList.add("dragging");
+                logLauncherEvent(`launcher_window_drag_start_${title}`);
                 
                 offsetX = e.clientX - win.offsetLeft;
                 offsetY = e.clientY - win.offsetTop;
@@ -445,12 +462,14 @@
 
                 win.style.left = (e.clientX - offsetX) + "px";
                 win.style.top = (e.clientY - offsetY) + "px";
+                logLauncherEvent(`launcher_window_drag_move_${title}_${Math.round(win.offsetLeft)}_${Math.round(win.offsetTop)}`);
             });
 
             document.addEventListener("mouseup", () => {
                 if (dragging) {
                     dragging = false;
                     win.classList.remove("dragging");
+                    logLauncherEvent(`launcher_window_drag_end_${title}`);
                 }
             });
         }
@@ -460,8 +479,8 @@
             button.addEventListener('click', () => {
                 const appName = button.title;
                 if (app_links[appName]) {
+                    logLauncherEvent(`launcher_taskbar_click_${appName}`);
                     createWindow(appName, app_links[appName]);
-                    fetch("http://localhost:6766/logwrite/?writedata=launcher_windowopen_success");
                 }
             });
         });

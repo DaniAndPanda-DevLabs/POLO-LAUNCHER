@@ -108,12 +108,20 @@
 </div>
 
 <script>
+function logAppEvent(message) {
+    const timestamp = new Date().toISOString();
+    fetch(`http://localhost:6766/logwrite/?writedata=${encodeURIComponent(`[${timestamp}] ${message}`)}`);
+}
+
+logAppEvent("scoreboard_page_loaded");
+
 let scores = {
     1: 0,
     2: 0
 };
 
 function changeScore(team, value) {
+    logAppEvent(`scoreboard_score_changed_team${team}_value${value}`);
     scores[team] += value;
 
     if (scores[team] < 0) {
@@ -124,6 +132,7 @@ function changeScore(team, value) {
 }
 
 function resetScores() {
+    logAppEvent("scoreboard_scores_reset");
     scores[1] = 0;
     scores[2] = 0;
 
