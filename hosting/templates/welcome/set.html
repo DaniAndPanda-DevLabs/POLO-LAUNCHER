@@ -166,7 +166,7 @@ button{
         <h1>이 Launcher의 특장점</h1>
         <h2><div class=icon>📶</div>무시무시한 속도</h2>
         <br><br>
-        <input type="radio" name="ok" value="수락">
+        <input type="radio" name="ok" value="수락"> 알겠습니다
     </section>
     <section class="slide">
         <div class="icon">⚡</div>
@@ -188,6 +188,7 @@ button{
 
 <div class="controls">
     <div class="dot active"></div>
+    <div class="dot"></div>
     <div class="dot"></div>
     <div class="dot"></div>
     <div class="dot"></div>
@@ -224,7 +225,7 @@ function updateSlider() {
         );
     });
 
-    if(current === 3){
+    if(current === 4){
         nextBtn.style.display = "none";
         startBtn.style.display = "inline-block";
     }else{
@@ -252,21 +253,20 @@ nextBtn.addEventListener("click",()=>{
         }
     }
     // 3번째 슬라이드 체크 확인
-    if (current === 1) {
-        const aiChecked = document.querySelector('input[name="ok"]:checked');
-        if (!aiChecked) {
+    if (current === 2) {
+        const ddChecked = document.querySelector('input[name="ok"]:checked');
+        if (!ddChecked) {
             alert("특장점을 수락하세요!");
             return; // 선택 안 했으면 안 넘어가게 막아요.
         }
     }
 
     // 모든 조건이 통과되면 다음 슬라이드로 이동합니다.
-    if(current < 3){
+    if(current < 4){
         current++;
         updateSlider();
     }
 });
-
 
 dots.forEach((dot,index)=>{
     dot.addEventListener("click",()=>{
