@@ -248,6 +248,9 @@ function openPopup_hiclass(){
 }
 
 function openPopup_google(){
+    // 클립보드에 복사
+    navigator.clipboard.writeText(document.getElementById("content").value);
+
     window.open(
         "https://classroom.google.com",
         "eventPopup",
