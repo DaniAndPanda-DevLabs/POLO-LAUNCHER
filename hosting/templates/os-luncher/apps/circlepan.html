@@ -78,6 +78,13 @@ button{
 <div id="result"></div>
 
 <script>
+function logAppEvent(message) {
+    const timestamp = new Date().toISOString();
+    fetch(`http://localhost:6766/logwrite/?writedata=${encodeURIComponent(`[${timestamp}] ${message}`)}`);
+}
+
+logAppEvent("circlepan_page_loaded");
+
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
 
@@ -133,6 +140,8 @@ function updateWheel(){
 function spin(){
     if(spinning) return;
 
+    logAppEvent("circlepan_spin_started");
+
     spinning = true;
 
     const extra = Math.random()*Math.PI*2;
@@ -164,6 +173,7 @@ function spin(){
             document.getElementById("result").textContent =
                 "🎉 결과: " + items[index];
 
+            logAppEvent(`circlepan_spin_result_${items[index]}`);
             spinning = false;
         }
     }
@@ -174,6 +184,7 @@ function spin(){
 drawWheel();
 
 document.getElementById("items").addEventListener("input", () => {
+    logAppEvent("circlepan_items_updated");
     const newItems = document.getElementById("items").value
         .split("\n")
         .map(v => v.trim())

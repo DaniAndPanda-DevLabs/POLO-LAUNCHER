@@ -32,10 +32,18 @@
             <input type="file" id="background-image-input" accept="image/*">
         </div>
     <script>
+    function logAppEvent(message) {
+        const timestamp = new Date().toISOString();
+        fetch(`http://localhost:6766/logwrite/?writedata=${encodeURIComponent(`[${timestamp}] ${message}`)}`);
+    }
+
+    logAppEvent("settings_page_loaded");
+
     const backgroundImageInput =
         document.getElementById('background-image-input');
 
     backgroundImageInput.addEventListener('change', function(event) {
+        logAppEvent("settings_background_selected");
         const file = event.target.files[0];
 
         if (!file) return;
@@ -45,6 +53,7 @@
         reader.onload = function(e) {
             const imageUrl = e.target.result;
 
+            logAppEvent(`settings_background_uploaded_${file.name}`);
             fetch('/api/set_background', {
                 method: 'POST',
                 headers: {

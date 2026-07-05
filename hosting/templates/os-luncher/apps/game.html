@@ -217,6 +217,12 @@
     </div>
 
     <script>
+        function logAppEvent(message) {
+            const timestamp = new Date().toISOString();
+            fetch(`http://localhost:6766/logwrite/?writedata=${encodeURIComponent(`[${timestamp}] ${message}`)}`);
+        }
+
+        logAppEvent('game_page_loaded');
         let coins = 0n; 
         
         // --- 16개 업그레이드 변수 시스템 ---

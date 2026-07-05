@@ -183,9 +183,16 @@
   </div>
 
   <script>
+    function logAppEvent(message) {
+      const timestamp = new Date().toISOString();
+      fetch(`http://localhost:6766/logwrite/?writedata=${encodeURIComponent(`[${timestamp}] ${message}`)}`);
+    }
+
+    logAppEvent("qrcodemaker_page_loaded");
     let qrcodeInstance = null;
 
     function generateQR() {
+      logAppEvent("qrcodemaker_generate_started");
       const input = document.getElementById('qrInput');
       const text = input.value.trim();
       const displayArea = document.getElementById('qrcode');
@@ -212,9 +219,11 @@
 
       // 다운로드 버튼 표시
       downloadBtn.style.display = 'block';
+      logAppEvent(`qrcodemaker_generate_completed_${text}`);
     }
 
     function downloadQR() {
+      logAppEvent("qrcodemaker_download_clicked");
       const qrImage = document.querySelector('#qrcode img');
       if (!qrImage) return;
 
@@ -228,7 +237,10 @@
 
     // Enter 키 지원
     document.getElementById('qrInput').addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') generateQR();
+      if (e.key === 'Enter') {
+        logAppEvent("qrcodemaker_enter_pressed");
+        generateQR();
+      }
     });
   </script>
 </body>

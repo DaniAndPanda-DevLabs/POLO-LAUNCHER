@@ -106,6 +106,13 @@
 </div>
 
 <script>
+    function logAppEvent(message) {
+        const timestamp = new Date().toISOString();
+        fetch(`http://localhost:6766/logwrite/?writedata=${encodeURIComponent(`[${timestamp}] ${message}`)}`);
+    }
+
+    logAppEvent("timer_page_loaded");
+
     let timerInterval;
     let totalSeconds = 0;
 
@@ -127,6 +134,7 @@
     }
 
     startBtn.addEventListener('click', () => {
+        logAppEvent("timer_started");
         if (totalSeconds === 0) {
             const h = parseInt(hInput.value) || 0;
             const m = parseInt(mInput.value) || 0;
@@ -146,6 +154,7 @@
 
             if (totalSeconds <= 0) {
                 clearInterval(timerInterval);
+                logAppEvent("timer_completed");
                 alert('시간이 종료되었습니다!');
                 resetTimer();
             }
@@ -153,6 +162,7 @@
     });
 
     stopBtn.addEventListener('click', () => {
+        logAppEvent("timer_stopped");
         clearInterval(timerInterval);
         startBtn.style.display = 'inline-block';
         stopBtn.style.display = 'none';
@@ -161,6 +171,7 @@
     resetBtn.addEventListener('click', resetTimer);
 
     function resetTimer() {
+        logAppEvent("timer_reset");
         clearInterval(timerInterval);
         totalSeconds = 0;
         updateDisplay();

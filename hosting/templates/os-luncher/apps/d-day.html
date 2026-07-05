@@ -32,8 +32,15 @@ input{
 </div>
 
 <script>
+function logAppEvent(message) {
+    const timestamp = new Date().toISOString();
+    fetch(`http://localhost:6766/logwrite/?writedata=${encodeURIComponent(`[${timestamp}] ${message}`)}`);
+}
+
 const dateInput = document.getElementById("targetDate");
 const result = document.getElementById("result");
+
+logAppEvent("d-day_page_loaded");
 
 function updateDday() {
     if (!dateInput.value) {
@@ -59,7 +66,10 @@ function updateDday() {
     }
 }
 
-dateInput.addEventListener("input", updateDday);
+dateInput.addEventListener("input", () => {
+    updateDday();
+    logAppEvent(`d-day_date_selected_${dateInput.value || "empty"}`);
+});
 </script>
 
 </body>

@@ -236,20 +236,46 @@ button:hover{
 </div>
 
 <script>
+function logAppEvent(message) {
+    const timestamp = new Date().toISOString();
+    fetch(`http://localhost:6766/logwrite/?writedata=${encodeURIComponent(`[${timestamp}] ${message}`)}`);
+}
+
+logAppEvent('memo_page_loaded');
+
 function openPopup_hiclass(){
+    logAppEvent('memo_open_popup_hiclass');
+
+    // 클립보드에 복사
+    navigator.clipboard.writeText(document.getElementById("content").value);
+    fetch(`http://localhost:6766/logwrite/?writedata=memo_clipboard-write_${encodeURIComponent(document.getElementById("content").value)}`);
+
+    alert("메모 내용이 클립보드에 복사되었습니다. 하이클래스 알림장 작성 페이지에서 붙여넣기(Ctrl+V) 하세요.");
+    fetch(`http://localhost:6766/logwrite/?writedata=memo_alert_success`);
+
     window.open(
         "https://www.hiclass.net/main/home",
         "eventPopup",
         "width=1200,height=750,left=100,top=100"
     );
+    fetch(`http://localhost:6766/logwrite/?writedata=memo_windowopen-hiclass_success`);
 }
 
 function openPopup_google(){
+    logAppEvent('memo_open_popup_google');
+
+    // 클립보드에 복사
+    navigator.clipboard.writeText(document.getElementById("content").value);
+    fetch(`http://localhost:6766/logwrite/?writedata=memo_clipboard-write_${encodeURIComponent(document.getElementById("content").value)}`);
+
+    alert("메모 내용이 클립보드에 복사되었습니다. 구글 클래스룸 공지사항 작성 페이지에서 붙여넣기(Ctrl+V) 하세요.");
+    fetch(`http://localhost:6766/logwrite/?writedata=memo_alert_success`);
     window.open(
         "https://classroom.google.com",
         "eventPopup",
         "width=1200,height=750,left=100,top=100"
     );
+    fetch(`http://localhost:6766/logwrite/?writedata=memo_windowopen-googleclassroom_success`);
 }
 
 let pages =
@@ -363,6 +389,7 @@ function loadPage(){
 /* 제목 변경 */
 
 titleEl.addEventListener("input",()=>{
+    logAppEvent('memo_title_changed');
 
     pages[current].title=
         titleEl.value || "제목 없음";
@@ -374,6 +401,7 @@ titleEl.addEventListener("input",()=>{
 /* 내용 자동 저장 */
 
 contentEl.addEventListener("input",()=>{
+    logAppEvent('memo_content_changed');
 
     pages[current].content=
         contentEl.value;
@@ -384,6 +412,7 @@ contentEl.addEventListener("input",()=>{
 /* 새 페이지 */
 
 function addPage(){
+    logAppEvent('memo_add_page');
 
     pages.push({
         title:`페이지 ${pages.length+1}`,
@@ -398,6 +427,7 @@ function addPage(){
 /* 삭제 */
 
 function deletePage(){
+    logAppEvent('memo_delete_page');
 
     if(pages.length===1){
         alert("최소 1개의 페이지는 필요합니다.");
@@ -418,6 +448,7 @@ function deletePage(){
 /* 다크모드 */
 
 function toggleTheme(){
+    logAppEvent('memo_toggle_theme');
 
     document.body.classList.toggle("dark");
 
