@@ -222,12 +222,51 @@
             margin-left: auto;
             text-align: center;
         }
+
+        /* 토스트 */
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 34px;
+    transform: translateX(-50%) translateY(40px);
+    min-width: 280px;
+    max-width: calc(100vw - 32px);
+    padding: 15px 20px;
+    border-radius: 22px;
+
+    background: rgba(36, 36, 36, 0.94);
+    color: white;
+    font-size: 15px;
+    line-height: 1.4;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.25);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition:
+        transform .35s cubic-bezier(.22,1,.36,1),
+        opacity .25s;
+}
+
+/* 표시 */
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
     </style>
 </head>
 
 <body>
     <div id="desktop-files">위젯</div>
-    
+
     <div id="taskbar">
         <button class="taskbar-app" title="디데이">📅</button>
         <button class="taskbar-app" title="설정">⚙️</button>
@@ -247,12 +286,16 @@
         <button class="taskbar-app" title="업데이트 로그">📜</button>
         <div id="livetime">0000-00-00<br>
         오전 0:00</div>
+
+    <div id="toast" class="toast">
+    <span>404 - 없는 페이지입니다.</span>
+    </div>
     </div>
 
     <div id="desktop"></div>
 
     <script>
-    
+
         const app_links = {
             '디데이': './apps/d-day.html',
             '타이머': './apps/timer.html',
@@ -486,6 +529,28 @@
                 }
             });
         });
+
+        //404 오류 토스트
+        let timer;
+
+        function showToast() {
+            const toast = document.getElementById("toast");
+
+            clearTimeout(timer);
+
+            toast.classList.add("show");
+
+            timer = setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3000);
+        }
+
+        // URL 파라미터 확인
+        const params = new URLSearchParams(window.location.search);
+
+        if (params.get("error") === "404") {
+            showToast();
+        }
     </script>
 </body>
 
