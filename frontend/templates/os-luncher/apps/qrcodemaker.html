@@ -173,6 +173,7 @@
 
     <div class="actions">
       <button class="btn-generate" onclick="generateQR()">QR코드 생성하기</button>
+      <input id="hw" type="number" placeholder="다운로드 화질(700추천)을 숫자로 입력하세요">
       <button id="downloadBtn" class="btn-download" onclick="downloadQR()">이미지로 저장하기</button>
     </div>
 
@@ -203,15 +204,15 @@
         input.focus();
         return;
       }
-
+      hw = document.getElementById("hw").value
       // 기존 내용 삭제
       displayArea.innerHTML = '';
-
+      
       // QR코드 생성
       qrcodeInstance = new QRCode(displayArea, {
         text: text,
-        width: 200,
-        height: 200,
+        width: hw,
+        height: hw,
         colorDark : "#000000",
         colorLight : "#ffffff",
         correctLevel : QRCode.CorrectLevel.H
