@@ -18,6 +18,7 @@
             'game': "./apps/game.html",
             '실시간 지구 동영상': './apps/earthlive.html',
             '업데이트 로그': "./apps/updateLog.html",
+            '터미널': "./apps/terminal.html",
             '플레이어': "./apps/files-viewer/index.html"
         };
 
