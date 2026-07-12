@@ -5,6 +5,7 @@
             '타이머': './apps/timer.html',
             '주사위 던지기': './apps/dice.html',
             '랜덤 선택': './apps/random.html',
+            '카메라' : './apps/cam.html',
             '돌림판': './apps/circlepan.html',
             '점수판': './apps/scoreboard.html',
             '메모': './apps/memo.html',
