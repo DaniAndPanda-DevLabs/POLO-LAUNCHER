@@ -1,7 +1,6 @@
 
         const app_links = {
             '디데이': './apps/d-day.html',
-            '지구 라이브': 'https://www.youtube.com/embed/fO9e9jnhYK8?si=MCcchnQvtl6B0zID',
             '타이머': './apps/timer.html',
             '주사위 던지기': './apps/dice.html',
             '랜덤 선택': './apps/random.html',
@@ -17,7 +16,7 @@
             '설정': './apps/settings.html',
             '파일 암호화': './apps/filesecurety.html',
             'game': "./apps/game.html",
-            '실시간 지구 동영상': './apps/earthlive.html',
+            '실시간 지구라이브': './apps/earthlive.html',
             '업데이트 로그': "./apps/updateLog.html",
             '터미널': "./apps/terminal.html",
             '플레이어': "./apps/files-viewer/index.html"
