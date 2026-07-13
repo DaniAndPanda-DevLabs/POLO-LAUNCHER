@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="dark light" />
-  <title>발표 도우미 · Professional Random Picker</title>
+  <title>Random</title>
   <style>
     /*
       발표 도우미 - 단일 HTML 웹앱
@@ -158,7 +158,7 @@
   <div class="aurora" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
   <div id="app" class="app blurred">
     <header class="glass" aria-label="현재 상태">
-      <div class="brand"><div class="logo" aria-hidden="true">P</div><div><h1>발표 도우미</h1><div class="subtitle">온라인 발표 · 행사 · 수업용 랜덤 번호 추첨기</div></div></div>
+      <div class="brand"><div class="logo" aria-hidden="true">P</div><div><h1>랜덤 선택기</h1><div class="subtitle">랜덤 번호 추첨기</div></div></div>
       <div class="stats">
         <div class="stat"><span>현재 상태</span><b id="statusText">대기 중</b></div>
         <div class="stat"><span>남은 번호</span><b id="remainingText">0</b></div>
@@ -189,7 +189,7 @@
   </div>
   <div id="modalLayer" class="modal-layer open" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <form id="settingsForm" class="modal glass">
-      <h2 id="modalTitle">발표 도우미</h2>
+      <h2 id="modalTitle">랜덤 선택기</h2>
       <p>번호 범위와 추첨 옵션을 설정하세요. 설정은 자동 저장되며 새로고침 후에도 유지됩니다.</p>
       <div class="form-grid">
         <label class="field">시작 번호<input id="startNumber" type="number" min="-999999" max="999999" value="1" required /></label>
