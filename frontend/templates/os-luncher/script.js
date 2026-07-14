@@ -22,6 +22,8 @@
             '플레이어': "./apps/files-viewer/index.html"
         };
 
+        alert("현재 POLO LAUNCHER는 베타 버전입니다. 일부 기능이 정상적으로 동작하지 않을 수 있습니다. ");
+
         function updateClock() {
         const now = new Date();
 
