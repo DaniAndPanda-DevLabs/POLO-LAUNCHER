@@ -45,7 +45,7 @@
         setInterval(updateClock, 1000);
 
         const desktop = document.getElementById("desktop");
-        const imageUrl = 'https://picsum.photos/1920/1080';
+        const imageUrl = './bgimg.png';
         // const imageUrl = 'http://localhost:6678/backgroundimage.jpg';
         document.body.style.backgroundImage = `url(${imageUrl})`;
         document.body.style.backgroundSize = 'cover';
