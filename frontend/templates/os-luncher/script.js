@@ -22,6 +22,8 @@
             '플레이어': "./apps/files-viewer/index.html"
         };
 
+        alert("현재 POLO LAUNCHER는 베타 버전입니다. 일부 기능이 정상적으로 동작하지 않을 수 있습니다. ");
+
         function updateClock() {
         const now = new Date();
 
@@ -43,7 +45,7 @@
         setInterval(updateClock, 1000);
 
         const desktop = document.getElementById("desktop");
-        const imageUrl = 'https://picsum.photos/1920/1080';
+        const imageUrl = './bgimg.png';
         // const imageUrl = 'http://localhost:6678/backgroundimage.jpg';
         document.body.style.backgroundImage = `url(${imageUrl})`;
         document.body.style.backgroundSize = 'cover';
