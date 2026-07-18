@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>One UI 7 Weather Dashboard</title>
+  <title>Today Breifing</title>
   <link rel="stylesheet" href="style.css" />
   <style>
       :root {
@@ -112,16 +112,11 @@ h2 { margin:0; font-size:20px; letter-spacing:-.03em; }.section-title-row span{c
     <section class="screen">
       <header class="status-bar" aria-label="status bar">
         <time id="statusTime">09:41</time>
-        <div class="status-icons" aria-hidden="true">
-          <span class="network-icon"><i></i><i></i><i></i><i></i></span>
-          <span class="wifi-icon"></span>
-          <span class="battery-icon"><span></span></span>
-        </div>
       </header>
 
       <section class="hero reveal">
-        <p class="eyebrow">Galaxy Weather</p>
-        <h1>오늘 하루<br />수고했어요</h1>
+        <p class="eyebrow">Today Breifing</p>
+        <h1 id="greeting">좋은 하루에요.</h1>
         <p class="hero-copy">차분한 밤공기와 함께 내일의 일정을 준비해요.</p>
       </section>
 
@@ -244,6 +239,24 @@ updateClock();
 renderHourly();
 setInterval(updateClock, 1000);
 
+function updateGreeting() {
+  const hour = new Date().getHours();
+  let greeting;
+
+  if (hour >= 5 && hour < 11) {
+    greeting = "좋은 아침이요.";
+  } else if (hour >= 11 && hour < 17) {
+    greeting = "좋은 점심이에요.";
+  } else if (hour >= 17 && hour < 22) {
+    greeting = "좋은 저녁이에요.";
+  } else {
+    greeting = "좋은 새벽이에요.";
+  }
+
+  document.getElementById("greeting").textContent = greeting;
+}
+
+updateGreeting();
   </script>
 </body>
 </html>
