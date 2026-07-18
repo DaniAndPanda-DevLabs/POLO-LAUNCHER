@@ -19,6 +19,7 @@
             '지구 라이브': './apps/earthlive.html',
             '업데이트 로그': "./apps/updateLog.html",
             '터미널': "./apps/terminal.html",
+            'Todaybriefing': "./apps/todaybriefing.html",
             '플레이어': "./apps/files-viewer/index.html"
         };
 
@@ -185,14 +186,31 @@
                 logLauncherEvent(`launcher_window_minimize_${title}_${win.classList.contains("minimized") ? "minimized" : "restored"}`);
             };
 
-            // 최대화
-            win.querySelector(".max-btn").onclick = (e) => {
-                e.stopPropagation();
-                // [수정] 최소화(접힌) 상태에서 최대화를 누르면 먼저 펼치도록 처리
-                if(win.classList.contains("minimized")) win.classList.remove("minimized");
-                win.classList.toggle("maximized");
-                logLauncherEvent(`launcher_window_maximize_${title}_${win.classList.contains("maximized") ? "maximized" : "restored"}`);
-            };
+win.querySelector(".max-btn").onclick = (e) => {
+    e.stopPropagation();
+
+    if (win.classList.contains("minimized"))
+        win.classList.remove("minimized");
+
+    // 최대화/복원 시에만 애니메이션
+    win.style.transition =
+        "left .28s cubic-bezier(.22,1,.36,1), " +
+        "top .28s cubic-bezier(.22,1,.36,1), " +
+        "width .28s cubic-bezier(.22,1,.36,1), " +
+        "height .28s cubic-bezier(.22,1,.36,1), " +
+        "border-radius .28s ease, " +
+        "box-shadow .28s ease";
+
+    win.classList.toggle("maximized");
+
+    // 애니메이션이 끝나면 transition 제거
+    const onEnd = () => {
+        win.style.transition = "";
+        win.removeEventListener("transitionend", onEnd);
+    };
+
+    win.addEventListener("transitionend", onEnd);
+};
 
             // 드래그 로직
             const header = win.querySelector(".window-header");

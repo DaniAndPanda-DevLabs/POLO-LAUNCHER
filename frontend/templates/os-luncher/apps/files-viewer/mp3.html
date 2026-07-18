@@ -175,6 +175,7 @@
     let currentIndex = 0;
     let audioCtx, analyser, source;
     let animationId = null;
+    let playbackRate = 1;
 
     function resizeCanvas() {
       const dpr = window.devicePixelRatio || 1;
@@ -203,6 +204,7 @@
       const url = URL.createObjectURL(file);
       audio.src = url;
       audio.load();
+      audio.playbackRate = playbackRate;
       progressBar.value = 0;
       durationEl.textContent = '00:00';
       setupVisualizer();
@@ -300,9 +302,9 @@
     });
 
     speedRange.addEventListener('input', (e) => {
-      const rate = parseFloat(e.target.value);
-      audio.playbackRate = rate;
-      speedValue.textContent = rate.toFixed(2) + 'x';
+      playbackRate = parseFloat(e.target.value);
+      audio.playbackRate = playbackRate;
+      speedValue.textContent = playbackRate.toFixed(2) + 'x';
     });
 
     function formatTime(seconds) {
@@ -313,7 +315,9 @@
     }
 
     // Initialize speed display
-    speedValue.textContent = parseFloat(speedRange.value).toFixed(2) + 'x';
+    playbackRate = parseFloat(speedRange.value);
+    audio.playbackRate = playbackRate;
+    speedValue.textContent = playbackRate.toFixed(2) + 'x';
     // Ensure canvas sizing right away
     resizeCanvas();
   </script>
