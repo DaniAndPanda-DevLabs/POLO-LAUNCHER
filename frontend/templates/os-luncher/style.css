@@ -252,3 +252,62 @@
     transform: translateX(-50%) translateY(0);
     pointer-events: auto;
 }
+
+.taskbar-app {
+    position: relative;
+}
+
+/* 툴팁 */
+.taskbar-app::after {
+    content: attr(title);
+
+    position: absolute;
+    bottom: 58px;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+
+    background: #63c36d;
+    color: #000;
+    font-size: 13px;
+    font-weight: bold;
+    white-space: nowrap;
+
+    padding: 8px 14px;
+    border-radius: 8px;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: .18s ease;
+
+    pointer-events: none;
+    z-index: 999999;
+}
+
+/* 아래 삼각형 */
+.taskbar-app::before {
+    content: "";
+
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 12px solid #63c36d;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: .18s ease;
+
+    pointer-events: none;
+    z-index: 999999;
+}
+
+/* 마우스를 올렸을 때 */
+.taskbar-app:hover::before,
+.taskbar-app:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
