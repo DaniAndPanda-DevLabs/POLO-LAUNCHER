@@ -52,6 +52,7 @@
         document.body.style.backgroundSize = 'cover';
         document.body.style.backgroundPosition = 'center';
 
+        const STORAGE_KEY = 'polo_launcher_windows';
         let zIndexCounter = 100;
 
         function logLauncherEvent(message) {
@@ -59,7 +60,63 @@
             fetch(`http://localhost:6766/logwrite/?writedata=${encodeURIComponent(`[${timestamp}] ${message}`)}`);
         }
 
-        function createWindow(title, url) {
+        function getCachedWindows() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return [];
+            try {
+                return JSON.parse(raw) || [];
+            } catch (error) {
+                console.warn('Failed to parse window cache:', error);
+                return [];
+            }
+        }
+
+        function setCachedWindows(windows) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(windows));
+            } catch (error) {
+                console.warn('Failed to save window cache:', error);
+            }
+        }
+
+        function saveWindowState(state) {
+            const windows = getCachedWindows().filter(w => w.title !== state.title);
+            windows.push(state);
+            setCachedWindows(windows);
+        }
+
+        function removeWindowState(title) {
+            const windows = getCachedWindows().filter(w => w.title !== title);
+            setCachedWindows(windows);
+        }
+
+        function updateWindowState(win) {
+            if (!win || !win.dataset.title) return;
+            const title = win.dataset.title;
+            const iframe = win.querySelector('iframe');
+            const state = {
+                title,
+                url: iframe ? iframe.src : app_links[title] || '',
+                left: win.style.left || `${win.offsetLeft}px`,
+                top: win.style.top || `${win.offsetTop}px`,
+                width: win.style.width || `${win.offsetWidth}px`,
+                height: win.style.height || `${win.offsetHeight}px`,
+                minimized: win.classList.contains('minimized'),
+                maximized: win.classList.contains('maximized'),
+                zIndex: Number(win.style.zIndex) || zIndexCounter,
+            };
+            saveWindowState(state);
+        }
+
+        function restoreCachedWindows() {
+            const savedWindows = getCachedWindows();
+            if (!savedWindows.length) return;
+            savedWindows.forEach(state => {
+                createWindow(state.title, state.url, state);
+            });
+        }
+
+        function createWindow(title, url, state = null) {
             // 이미 열려있는 창이 있는지 확인
             const windows = document.querySelectorAll('.window');
             for (let w of windows) {
@@ -68,6 +125,7 @@
                     w.classList.remove('minimized');
                     w.style.zIndex = ++zIndexCounter;
                     logLauncherEvent(`launcher_window_restore_${title}`);
+                    updateWindowState(w);
                     return;
                 }
             }
@@ -76,8 +134,17 @@
             win.className = "window";
             win.dataset.title = title;
 
-            win.style.left = (100 + Math.random() * 150) + "px";
-            win.style.top = (50 + Math.random() * 100) + "px";
+            if (state && state.left) {
+                win.style.left = state.left;
+            } else {
+                win.style.left = (100 + Math.random() * 150) + "px";
+            }
+
+            if (state && state.top) {
+                win.style.top = state.top;
+            } else {
+                win.style.top = (50 + Math.random() * 100) + "px";
+            }
 
             win.innerHTML = `
                 <div class="window-header">
@@ -88,7 +155,7 @@
                         <button class="close-btn">✕</button>
                     </div>
                 </div>
-                <iframe src="${url}"></iframe>
+                <iframe src="${state && state.url ? state.url : url}"></iframe>
             `;
 
             const iframe = win.querySelector('iframe');
@@ -97,8 +164,18 @@
             });
 
             desktop.appendChild(win);
-            win.style.zIndex = ++zIndexCounter;
+            if (state && state.zIndex) {
+                win.style.zIndex = state.zIndex;
+                zIndexCounter = Math.max(zIndexCounter, state.zIndex);
+            } else {
+                win.style.zIndex = ++zIndexCounter;
+            }
+            if (state && state.width) win.style.width = state.width;
+            if (state && state.height) win.style.height = state.height;
+            if (state && state.maximized) win.classList.add('maximized');
+            if (state && state.minimized) win.classList.add('minimized');
             logLauncherEvent(`launcher_window_created_${title}`);
+            updateWindowState(win);
 
             ['n', 'e', 's', 'w', 'ne', 'nw', 'se', 'sw'].forEach(direction => {
                 const handle = document.createElement('div');
@@ -159,6 +236,7 @@
                         document.removeEventListener('mouseup', onMouseUp);
                         win.classList.remove('resizing');
                         document.body.style.userSelect = '';
+                        updateWindowState(win);
                     };
 
                     document.addEventListener('mousemove', onMouseMove);
@@ -174,16 +252,17 @@
             // 닫기
             win.querySelector(".close-btn").onclick = () => {
                 win.remove();
+                removeWindowState(title);
                 logLauncherEvent(`launcher_window_close_${title}`);
             };
 
             // 최소화 (접기/펴기)
             win.querySelector(".min-btn").onclick = (e) => {
                 e.stopPropagation();
-                // [수정] 최대화 상태일 때는 최소화(접기)가 작동하지 않도록 방어 코드 추가
-                if(win.classList.contains("maximized")) win.classList.remove("maximized");
+                if (win.classList.contains("maximized")) win.classList.remove("maximized");
                 win.classList.toggle("minimized");
                 logLauncherEvent(`launcher_window_minimize_${title}_${win.classList.contains("minimized") ? "minimized" : "restored"}`);
+                updateWindowState(win);
             };
 
 win.querySelector(".max-btn").onclick = (e) => {
@@ -192,7 +271,6 @@ win.querySelector(".max-btn").onclick = (e) => {
     if (win.classList.contains("minimized"))
         win.classList.remove("minimized");
 
-    // 최대화/복원 시에만 애니메이션
     win.style.transition =
         "left .28s cubic-bezier(.22,1,.36,1), " +
         "top .28s cubic-bezier(.22,1,.36,1), " +
@@ -202,8 +280,8 @@ win.querySelector(".max-btn").onclick = (e) => {
         "box-shadow .28s ease";
 
     win.classList.toggle("maximized");
+    updateWindowState(win);
 
-    // 애니메이션이 끝나면 transition 제거
     const onEnd = () => {
         win.style.transition = "";
         win.removeEventListener("transitionend", onEnd);
@@ -242,11 +320,12 @@ win.querySelector(".max-btn").onclick = (e) => {
                     dragging = false;
                     win.classList.remove("dragging");
                     logLauncherEvent(`launcher_window_drag_end_${title}`);
+                    updateWindowState(win);
                 }
             });
         }
 
-        // 태스크바 앱 클릭 이벤트
+        // 태スク바 앱 클릭 이벤트
         document.querySelectorAll('.taskbar-app').forEach(button => {
             button.addEventListener('click', () => {
                 const appName = button.title;
@@ -256,6 +335,8 @@ win.querySelector(".max-btn").onclick = (e) => {
                 }
             });
         });
+
+        restoreCachedWindows();
 
         //404 오류 토스트
         let timer;
