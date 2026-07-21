@@ -352,10 +352,3 @@ win.querySelector(".max-btn").onclick = (e) => {
                 toast.classList.remove("show");
             }, 5000);
         }
-
-        // URL 파라미터 확인
-        const params = new URLSearchParams(window.location.search);
-
-        if (params.get("error") === "404") {
-            showToast();
-        }
