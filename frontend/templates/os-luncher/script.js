@@ -26,6 +26,25 @@
         const SEARCH_RESULTS_LIMIT = 6;
         const appNames = Object.keys(app_links);
 
+        const APP_KEYWORDS = {
+            '바코드': 'QR 코드 생성기',
+            'qr코드': 'QR 코드 생성기',
+            'barcode': 'QR 코드 생성기',
+            '코드': 'QR 코드 생성기',
+            '생성기': 'QR 코드 생성기'
+        };
+
+        function resolveKeywordApp(query) {
+            const normalized = query.trim().toLowerCase();
+            if (!normalized) return null;
+            for (const [keyword, appName] of Object.entries(APP_KEYWORDS)) {
+                if (normalized === keyword || normalized.includes(keyword)) {
+                    return appName;
+                }
+            }
+            return null;
+        }
+
         function openAppByName(appName) {
             if (!app_links[appName]) return;
             logLauncherEvent(`launcher_search_open_${appName}`);
