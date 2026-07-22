@@ -2,6 +2,65 @@
             margin: 0;
             height: 100vh;
             background-color: #1e293b; 
+            position: relative;
+            overflow: hidden;
+        }
+
+        #top-search-widget {
+            position: fixed;
+            top: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 99999;
+            width: min(620px, calc(100vw - 32px));
+        }
+
+        #search-widget {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .search-icon {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        #search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: white;
+            font-size: 15px;
+            font-family: sans-serif;
+        }
+
+        #search-input::placeholder {
+            color: rgba(255, 255, 255, 0.72);
+        }
+
+        #search-button {
+            border: none;
+            border-radius: 999px;
+            padding: 8px 12px;
+            background: linear-gradient(135deg, #60a5fa, #2563eb);
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        #search-button:hover {
+            filter: brightness(1.08);
         }
 
         /* 태스크바 */

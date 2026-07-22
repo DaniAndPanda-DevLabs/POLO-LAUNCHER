@@ -46,11 +46,33 @@
         setInterval(updateClock, 1000);
 
         const desktop = document.getElementById("desktop");
+        const searchInput = document.getElementById("search-input");
+        const searchButton = document.getElementById("search-button");
         const imageUrl = './bgimg.png';
         // const imageUrl = 'http://localhost:6678/backgroundimage.jpg';
         document.body.style.backgroundImage = `url(${imageUrl})`;
         document.body.style.backgroundSize = 'cover';
         document.body.style.backgroundPosition = 'center';
+
+        function launchSearch() {
+            const query = searchInput.value.trim();
+            if (!query) return;
+            const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        if (searchButton) {
+            searchButton.addEventListener('click', launchSearch);
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    launchSearch();
+                }
+            });
+        }
 
         const STORAGE_KEY = 'polo_launcher_windows';
         let zIndexCounter = 100;
