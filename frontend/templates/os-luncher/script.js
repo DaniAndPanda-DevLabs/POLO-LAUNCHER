@@ -23,6 +23,62 @@
             '플레이어': "./apps/files-viewer/index.html"
         };
 
+        const SEARCH_RESULTS_LIMIT = 6;
+        const appNames = Object.keys(app_links);
+
+        const APP_KEYWORDS = {
+            '바코드': 'QR 코드 생성기',
+            'qr코드': 'QR 코드 생성기',
+            'barcode': 'QR 코드 생성기',
+            '코드': 'QR 코드 생성기',
+            '생성기': 'QR 코드 생성기'
+        };
+
+        function resolveKeywordApp(query) {
+            const normalized = query.trim().toLowerCase();
+            if (!normalized) return null;
+            for (const [keyword, appName] of Object.entries(APP_KEYWORDS)) {
+                if (normalized === keyword || normalized.includes(keyword)) {
+                    return appName;
+                }
+            }
+            return null;
+        }
+
+        function openAppByName(appName) {
+            if (!app_links[appName]) return;
+            logLauncherEvent(`launcher_search_open_${appName}`);
+            createWindow(appName, app_links[appName]);
+        }
+
+        function renderSearchResults(query) {
+            const normalized = query.trim().toLowerCase();
+            const results = normalized
+                ? appNames.filter(name => name.toLowerCase().includes(normalized)).slice(0, SEARCH_RESULTS_LIMIT)
+                : [];
+
+            const resultsContainer = document.getElementById('search-results');
+            if (!results.length) {
+                resultsContainer.classList.remove('visible');
+                resultsContainer.innerHTML = '';
+                return;
+            }
+
+            resultsContainer.innerHTML = results
+                .map(name => `<button type="button" class="search-result-item">${name}</button>`)
+                .join('');
+            resultsContainer.classList.add('visible');
+
+            resultsContainer.querySelectorAll('.search-result-item').forEach(button => {
+                button.addEventListener('click', () => {
+                    openAppByName(button.textContent);
+                    const searchInput = document.getElementById('app-search-input');
+                    searchInput.value = '';
+                    renderSearchResults('');
+                });
+            });
+        }
+
         alert("현재 POLO LAUNCHER는 베타 버전입니다. 일부 기능이 정상적으로 동작하지 않을 수 있습니다. ");
 
         function updateClock() {
@@ -325,7 +381,7 @@ win.querySelector(".max-btn").onclick = (e) => {
             });
         }
 
-        // 태スク바 앱 클릭 이벤트
+        // 태스크바 앱 클릭 이벤트
         document.querySelectorAll('.taskbar-app').forEach(button => {
             button.addEventListener('click', () => {
                 const appName = button.title;
@@ -334,6 +390,36 @@ win.querySelector(".max-btn").onclick = (e) => {
                     createWindow(appName, app_links[appName]);
                 }
             });
+        });
+
+        const searchInput = document.getElementById('app-search-input');
+        const searchResults = document.getElementById('search-results');
+
+        searchInput.addEventListener('input', (event) => {
+            renderSearchResults(event.target.value);
+        });
+
+        searchInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                const query = event.target.value.trim().toLowerCase();
+                if (!query) return;
+                const match = appNames.find(name => name.toLowerCase().includes(query));
+                if (match) {
+                    openAppByName(match);
+                    searchInput.value = '';
+                    renderSearchResults('');
+                }
+            }
+            if (event.key === 'Escape') {
+                searchInput.value = '';
+                renderSearchResults('');
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('#search-wrapper')) {
+                searchResults.classList.remove('visible');
+            }
         });
 
         restoreCachedWindows();
