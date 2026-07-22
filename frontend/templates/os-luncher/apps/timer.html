@@ -42,6 +42,11 @@
             font-weight: 700;
             margin-bottom: 1.5rem;
             font-variant-numeric: tabular-nums;
+            transition: color 0.3s ease;
+        }
+
+        .timer-display.warning {
+            color: #ff4757;
         }
 
         .progress-container{
@@ -168,6 +173,13 @@
         const s = totalSeconds % 60;
         display.textContent = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 
+        // 30초 이하일 때 빨간색으로 표시
+        if (totalSeconds <= 30 && totalSeconds > 0) {
+            display.classList.add('warning');
+        } else {
+            display.classList.remove('warning');
+        }
+
         if (initialSeconds > 0) {
             const percent = (totalSeconds / initialSeconds) * 100;
             progressBar.style.width = percent + "%";
@@ -259,6 +271,7 @@
         hInput.value = 0;
         mInput.value = 0;
         sInput.value = 0;
+        display.classList.remove('warning');
     }
 </script>
 
