@@ -8,7 +8,7 @@
 
         #top-search-widget {
             position: fixed;
-            top: 32px;
+            top: 15%;
             left: 50%;
             transform: translateX(-50%);
             z-index: 99999;
