@@ -21,7 +21,7 @@
             '터미널': "./apps/terminal.html",
             'Todaybriefing': "./apps/todaybriefing.html",
             '플레이어': "./apps/files-viewer/index.html",
-            "ModernUI": "./apps/ModernUI.html"
+            "ModernUI": "./apps/modernUI.html"
         };
 
         const SEARCH_RESULTS_LIMIT = 6;
